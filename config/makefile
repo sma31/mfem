@@ -9,6 +9,9 @@
 # terms of the GNU Lesser General Public License (as published by the Free
 # Software Foundation) version 2.1 dated February 1999.
 
+CUDATOOLKIT_HOME ?= /usr/local/cuda
+NVCC=$(CUDATOOLKIT_HOME)/bin/nvcc
+
 SRC = $(if $(MFEM_DIR),$(MFEM_DIR)/config/,)
 
 # Helper print-info function
@@ -44,7 +47,7 @@ SMX_FILE = $(subst @MFEM_DIR@,$(if $(MFEM_DIR),$(MFEM_DIR),..),$(SMX_PATH))
 
 $(GHV): $(SRC)$(GHV).cpp
 	$(call mfem-info, Determining HYPRE version ...)
-	$(MFEM_CXX) ${GHV_FLAGS} $(SRC)$(GHV).cpp -o $(GHV)
+	$(MFEM_CXX) -I$(CHARMDIR)/include ${GHV_FLAGS} $(SRC)$(GHV).cpp -o $(GHV) -I$(CUDATOOLKIT_HOME)/include -L$(CUDATOOLKIT_HOME)/lib64 -lcudart
 $(GHV).out: $(GHV)
 	./$(GHV) > $(GHV).out
 .INTERMEDIATE: $(GHV) $(GHV).out

@@ -155,7 +155,7 @@ else
 endif
 
 # Compile flags used by MFEM: CPPFLAGS, CXXFLAGS, plus library flags
-INCFLAGS =
+INCFLAGS = -I$(CHARMDIR)/include -I$(CUDATOOLKIT_HOME)/include
 # Link flags used by MFEM: library link flags plus LDFLAGS (added last)
 ALL_LIBS =
 
@@ -362,8 +362,8 @@ serial debug:    M_MPI=NO
 parallel pdebug: M_MPI=YES
 serial parallel: M_DBG=NO
 debug pdebug:    M_DBG=YES
-serial parallel debug pdebug:
-	$(MAKE) -f $(THIS_MK) config MFEM_USE_MPI=$(M_MPI) MFEM_DEBUG=$(M_DBG) \
+serial parallel debug pdebug: #config - Removed for ampi+cuda build
+	$(MAKE) -f $(THIS_MK) MFEM_USE_MPI=$(M_MPI) MFEM_DEBUG=$(M_DBG) \
 	   $(MAKEOVERRIDES_SAVE)
 	$(MAKE) $(MAKEOVERRIDES_SAVE)
 

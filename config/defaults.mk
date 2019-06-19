@@ -17,9 +17,9 @@
 
 # Some choices below are based on the OS type:
 NOTMAC := $(subst Darwin,,$(shell uname -s))
-
-CXX = g++
-MPICXX = mpicxx
+CHARMDIR = /home/$(USER)/charmworks/charm/netlrts-linux-x86_64-cuda
+CXX = $(CHARMDIR)/bin/ampicxx
+MPICXX = $(CHARMDIR)/bin/ampicxx
 
 OPTIM_FLAGS = -O3
 DEBUG_FLAGS = -g -Wall
